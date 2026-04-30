@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart & Checkout – PetVital Design</title>
+    <style>
+        :root {
+            --color-primary: #2D5C3F;
+            --color-accent: #D4A574;
+            --color-bg-warm: #FFFBF5;
+            --color-text-primary: #2C3E50;
+            --color-text-secondary: #7A8A99;
+            --color-border: #E8ECEF;
+            --color-bg-white: #FFFFFF;
+            --color-bg-light: #F7F9FB;
+            --color-success: #27AE60;
+            --color-error: #E74C3C;
+            --font-family: "Segoe UI", Roboto, sans-serif;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+            --radius-md: 8px;
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.16);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--color-text-primary);
+            background: var(--color-bg-warm);
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: var(--space-lg); }
+        h2 { font-size: 24px; font-weight: 700; margin-bottom: var(--space-lg); }
+        h3 { font-size: 16px; font-weight: 600; margin-bottom: var(--space-md); }
+        p { font-size: 14px; line-height: 1.6; margin-bottom: var(--space-md); }
+
+        /* Navigation */
+        nav {
+            background: var(--color-bg-white);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--space-lg) var(--space-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* Progress Indicator */
+        .progress-bar {
+            background: var(--color-bg-white);
+            padding: var(--space-lg) 0;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-sm);
+            opacity: 0.4;
+        }
+
+        .progress-step.active,
+        .progress-step.completed {
+            opacity: 1;
+        }
+
+        .progress-number {
+            width: 32px;
+            height: 32px;
+            background: var(--color-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .progress-step.active .progress-number {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .progress-step.completed .progress-number {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* Cart Layout */
+        .cart-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--space-3xl);
+            padding: var(--space-2xl) 0;
+        }
+
+        .cart-items-section {
+            background: var(--color-bg-white);
+            padding: var(--space-xl);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+        }
+
+        /* Cart Item */
+        .cart-item {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: var(--space-lg);
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--color-border);
+            align-items: start;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background: var(--color-bg-light);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .cart-item-details h4 {
+            margin-bottom: var(--space-sm);
+        }
+
+        .cart-item-meta {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-md);
+        }
+
+        .cart-item-actions {
+            display: flex;
+            gap: var(--space-sm);
+            font-size: 11px;
+        }
+
+        .cart-item-actions a {
+            color: var(--color-primary);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .cart-item-price {
+            text-align: right;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--color-primary);
+        }
+
+        /* Order Summary Sidebar */
+        .order-summary {
+            background: var(--color-bg-light);
+            padding: var(--space-xl);
+            border-radius: var(--radius-md);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 14px;
+        }
+
+        .summary-row.total {
+            border-bottom: none;
+            border-top: 2px solid var(--color-border);
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--color-primary);
+            margin-top: var(--space-md);
+            padding-top: var(--space-md);
+        }
+
+        /* Checkout Form */
+        .checkout-wrapper {
+            max-width: 600px;
+        }
+
+        .form-section {
+            background: var(--color-bg-white);
+            padding: var(--space-xl);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-section h2 {
+            font-size: 18px;
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-secondary);
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-family: var(--font-family);
+            color: var(--color-text-primary);
+            transition: all 250ms ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(45, 92, 63, 0.1);
+        }
+
+        input::placeholder {
+            color: var(--color-text-secondary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        /* Radio & Checkbox */
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .radio-item,
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            cursor: pointer;
+        }
+
+        .radio-item input,
+        .checkbox-item input {
+            width: auto;
+            margin: 0;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 250ms ease;
+            text-decoration: none;
+            font-family: var(--font-family);
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            opacity: 0.95;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-bg-light);
+        }
+
+        /* Order Confirmation */
+        .confirmation-message {
+            background: var(--color-bg-light);
+            padding: var(--space-xl);
+            border-radius: var(--radius-md);
+            text-align: center;
+            border-left: 4px solid var(--color-success);
+        }
+
+        .confirmation-icon {
+            font-size: 48px;
+            margin-bottom: var(--space-md);
+        }
+
+        .confirmation-message h2 {
+            margin-bottom: var(--space-md);
+        }
+
+        .order-number {
+            font-family: monospace;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* Annotation */
+        .annotation {
+            background: #FEF3C7;
+            border-left: 4px solid #F39C12;
+            padding: var(--space-md);
+            margin: var(--space-lg) 0;
+            font-size: 11px;
+            color: #92400e;
+            font-family: monospace;
+            border-radius: var(--radius-md);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .cart-wrapper {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .cart-item {
+                grid-template-columns: 60px 1fr;
+            }
+
+            .cart-item-image {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+
+            .cart-item-actions {
+                grid-column: 2;
+                margin-top: var(--space-sm);
+            }
+
+            .progress-steps {
+                gap: var(--space-md);
+            }
+
+            .progress-label {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-logo">PetVital</div>
+        <div style="display: flex; gap: var(--space-lg); font-size: 20px; cursor: pointer;">
+            <span>🔍</span>
+            <span>👤</span>
+            <span>🛒</span>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+         CART PAGE
+         ============================================================ -->
+    <div class="container" style="padding-top: var(--space-2xl);">
+        <div style="margin-bottom: var(--space-3xl);">
+            <h1>Shopping Cart</h1>
+            <p style="color: var(--color-text-secondary);">You have 3 items in your cart</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-steps">
+                <div class="progress-step completed">
+                    <div class="progress-number">✓</div>
+                    <div class="progress-label">Cart</div>
+                </div>
+                <div class="progress-step active">
+                    <div class="progress-number">2</div>
+                    <div class="progress-label">Checkout</div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-number">3</div>
+                    <div class="progress-label">Confirmation</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="annotation">PROGRESS BAR: 3 steps. Completed (green with checkmark), active (primary), future (gray)</div>
+
+        <!-- Cart Items -->
+        <div class="cart-wrapper">
+            <div class="cart-items-section">
+                <h2>Order Items</h2>
+
+                <div class="cart-item">
+                    <div class="cart-item-image">🐶</div>
+                    <div class="cart-item-details">
+                        <h4>Premium Puppy Formula (5 lbs)</h4>
+                        <div class="cart-item-meta">Quantity: 2 | In Stock</div>
+                        <div class="cart-item-actions">
+                            <a href="#">Edit</a> | <a href="#">Remove</a>
+                        </div>
+                    </div>
+                    <div class="cart-item-price">$69.98</div>
+                </div>
+
+                <div class="cart-item">
+                    <div class="cart-item-image">🦴</div>
+                    <div class="cart-item-details">
+                        <h4>Joint Support Treats (1 lb)</h4>
+                        <div class="cart-item-meta">Quantity: 1 | In Stock</div>
+                        <div class="cart-item-actions">
+                            <a href="#">Edit</a> | <a href="#">Remove</a>
+                        </div>
+                    </div>
+                    <div class="cart-item-price">$16.99</div>
+                </div>
+
+                <div class="cart-item">
+                    <div class="cart-item-image">🥕</div>
+                    <div class="cart-item-details">
+                        <h4>Veggie Mix Supplement</h4>
+                        <div class="cart-item-meta">Quantity: 1 | In Stock</div>
+                        <div class="cart-item-actions">
+                            <a href="#">Edit</a> | <a href="#">Remove</a>
+                        </div>
+                    </div>
+                    <div class="cart-item-price">$14.99</div>
+                </div>
+
+                <div class="annotation">CART ITEMS: 3-column layout (image / details / price). Meta info in small gray text. Edit/Remove links</div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>$101.96</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span style="color: var(--color-success); font-weight: 600;">FREE</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Tax</span>
+                    <span>$8.16</span>
+                </div>
+
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>$110.12</span>
+                </div>
+
+                <button class="btn btn-primary" style="margin-top: var(--space-xl);">Proceed to Checkout</button>
+                <button class="btn btn-secondary" style="margin-top: var(--space-md);">Continue Shopping</button>
+
+                <div class="annotation" style="margin-top: var(--space-lg);">SUMMARY: Sticky sidebar on desktop. Subtotal/Shipping/Tax then total in bold primary color</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         CHECKOUT PAGE
+         ============================================================ -->
+    <div class="container" style="margin-top: var(--space-3xl); padding-bottom: var(--space-3xl);">
+        <div style="margin-bottom: var(--space-2xl);">
+            <h1>Checkout</h1>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-steps">
+                <div class="progress-step completed">
+                    <div class="progress-number">✓</div>
+                    <div class="progress-label">Cart</div>
+                </div>
+                <div class="progress-step active">
+                    <div class="progress-number">2</div>
+                    <div class="progress-label">Checkout</div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-number">3</div>
+                    <div class="progress-label">Confirmation</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="checkout-wrapper">
+            <!-- Shipping Address -->
+            <div class="form-section">
+                <h2>Shipping Address</h2>
+
+                <div class="form-group">
+                    <label htmlFor="email">Email Address</label>
+                    <input type="email" id="email" placeholder="you@example.com">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" placeholder="Jane">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" placeholder="Doe">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Street Address</label>
+                    <input type="text" placeholder="123 Main Street">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" placeholder="San Francisco">
+                    </div>
+                    <div class="form-group">
+                        <label>State / Province</label>
+                        <select>
+                            <option>Select state...</option>
+                            <option>California</option>
+                            <option>Texas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Postal Code</label>
+                        <input type="text" placeholder="94105">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <select>
+                            <option>United States</option>
+                            <option>Canada</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="annotation">FORM: All inputs with focus state (blue border + subtle glow). Labels uppercase, 12px, gray</div>
+            </div>
+
+            <!-- Shipping Method -->
+            <div class="form-section">
+                <h2>Shipping Method</h2>
+
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="standard" name="shipping" checked>
+                        <label for="standard" style="margin: 0; text-transform: none; font-weight: 600;">
+                            Standard Shipping (5-7 business days) — FREE
+                        </label>
+                    </div>
+
+                    <div class="radio-item">
+                        <input type="radio" id="express" name="shipping">
+                        <label for="express" style="margin: 0; text-transform: none; font-weight: 600;">
+                            Express Shipping (2-3 business days) — $12.99
+                        </label>
+                    </div>
+
+                    <div class="radio-item">
+                        <input type="radio" id="overnight" name="shipping">
+                        <label for="overnight" style="margin: 0; text-transform: none; font-weight: 600;">
+                            Overnight Shipping — $24.99
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment -->
+            <div class="form-section">
+                <h2>Payment Method</h2>
+
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="card" name="payment" checked>
+                        <label for="card" style="margin: 0; text-transform: none; font-weight: 600;">Credit / Debit Card</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="paypal" name="payment">
+                        <label for="paypal" style="margin: 0; text-transform: none; font-weight: 600;">PayPal</label>
+                    </div>
+                </div>
+
+                <div id="cardPayment" style="margin-top: var(--space-lg);">
+                    <div class="form-group">
+                        <label>Cardholder Name</label>
+                        <input type="text" placeholder="Jane Doe">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <input type="text" placeholder="1234 5678 9012 3456">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry Date</label>
+                            <input type="text" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="text" placeholder="123">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary before submit -->
+            <div class="form-section">
+                <h2>Order Summary</h2>
+                <div class="summary-row" style="border: none;">
+                    <span>Premium Puppy Formula (5 lbs) × 2</span>
+                    <span>$69.98</span>
+                </div>
+                <div class="summary-row" style="border: none;">
+                    <span>Joint Support Treats × 1</span>
+                    <span>$16.99</span>
+                </div>
+                <div class="summary-row" style="border: none;">
+                    <span>Veggie Mix Supplement × 1</span>
+                    <span>$14.99</span>
+                </div>
+                <div class="summary-row" style="border: none;">
+                    <span>Subtotal</span>
+                    <span>$101.96</span>
+                </div>
+                <div class="summary-row" style="border: none;">
+                    <span>Shipping</span>
+                    <span>FREE</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>$110.12</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" style="margin-bottom: var(--space-md);">Place Order</button>
+            <button class="btn btn-secondary">Back to Cart</button>
+
+            <div class="annotation" style="margin-top: var(--space-lg);">CTA BUTTONS: Full-width. Primary (place order) over Secondary (back). Hover: lift +2px, shadow</div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         CONFIRMATION PAGE
+         ============================================================ -->
+    <div class="container" style="margin-top: var(--space-4xl); padding-bottom: var(--space-3xl);">
+        <div style="margin-bottom: var(--space-2xl);">
+            <h1>Order Confirmation</h1>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-steps">
+                <div class="progress-step completed">
+                    <div class="progress-number">✓</div>
+                    <div class="progress-label">Cart</div>
+                </div>
+                <div class="progress-step completed">
+                    <div class="progress-number">✓</div>
+                    <div class="progress-label">Checkout</div>
+                </div>
+                <div class="progress-step active">
+                    <div class="progress-number">3</div>
+                    <div class="progress-label">Confirmation</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="max-width: 600px; margin: 0 auto;">
+            <div class="confirmation-message">
+                <div class="confirmation-icon">✓</div>
+                <h2>Thank You for Your Order!</h2>
+                <p>Your order has been confirmed and we've sent a receipt to <strong>you@example.com</strong></p>
+                <p style="margin-top: var(--space-lg); margin-bottom: 0;">
+                    <strong>Order Number:</strong><br>
+                    <span class="order-number">#PV-2024-001847</span>
+                </p>
+            </div>
+
+            <div class="form-section" style="margin-top: var(--space-lg);">
+                <h3>What's Next?</h3>
+                <p>✓ We've begun preparing your order</p>
+                <p>✓ You'll receive a shipping confirmation within 24 hours</p>
+                <p>✓ Track your delivery via email</p>
+
+                <button class="btn btn-primary" style="margin-top: var(--space-lg);">Continue Shopping</button>
+                <button class="btn btn-secondary" style="margin-top: var(--space-md);">View Account</button>
+            </div>
+
+            <div class="annotation" style="margin-top: var(--space-lg);">CONFIRMATION: Green checkmark icon (48px). Order number in monospace font. Success message with next steps</div>
+        </div>
+    </div>
+
+</body>
+</html>

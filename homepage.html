@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetVital – Homepage Design Comp</title>
+    <style>
+        :root {
+            --color-primary: #2D5C3F;
+            --color-accent: #D4A574;
+            --color-bg-warm: #FFFBF5;
+            --color-text-primary: #2C3E50;
+            --color-text-secondary: #7A8A99;
+            --color-border: #E8ECEF;
+            --color-bg-white: #FFFFFF;
+            --color-bg-light: #F7F9FB;
+            --color-success: #27AE60;
+            --font-family: "Segoe UI", Roboto, sans-serif;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+            --radius-md: 8px;
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.16);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--color-text-primary);
+            background: var(--color-bg-warm);
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* ================================================================
+           NAVIGATION
+           ================================================================ */
+
+        nav {
+            background: var(--color-bg-white);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--space-lg) var(--space-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: var(--space-xl);
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--color-text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+            transition: all 250ms ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        /* ================================================================
+           HERO SECTION
+           ================================================================ */
+
+        .hero {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #1f4a2d 100%);
+            color: var(--color-bg-white);
+            padding: var(--space-3xl) var(--space-xl);
+            text-align: center;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-lg);
+            max-width: 600px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: var(--space-xl);
+            max-width: 600px;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 250ms ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--color-accent);
+            color: var(--color-text-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-bg-white);
+            border: 2px solid var(--color-bg-white);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ================================================================
+           TRUST SECTION
+           ================================================================ */
+
+        .trust-section {
+            background: var(--color-bg-white);
+            padding: var(--space-3xl) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-xl);
+        }
+
+        .trust-item {
+            text-align: center;
+        }
+
+        .trust-icon {
+            font-size: 44px;
+            margin-bottom: var(--space-md);
+        }
+
+        .trust-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .trust-item p {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: 0;
+        }
+
+        /* ================================================================
+           FEATURED PRODUCTS SECTION
+           ================================================================ */
+
+        .section {
+            padding: var(--space-3xl) 0;
+        }
+
+        .section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: var(--space-xl);
+            text-align: center;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-xl);
+        }
+
+        .product-card {
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: all 250ms ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-accent);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--color-bg-light), #efefef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 56px;
+        }
+
+        .product-info {
+            padding: var(--space-lg);
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .product-desc {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-md);
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--space-lg);
+        }
+
+        .product-card .btn {
+            width: 100%;
+            text-align: center;
+            background: var(--color-primary);
+            color: var(--color-bg-white);
+        }
+
+        /* ================================================================
+           CTA SECTION
+           ================================================================ */
+
+        .cta-section {
+            background: var(--color-bg-light);
+            padding: var(--space-3xl) var(--space-xl);
+            text-align: center;
+            border-radius: var(--radius-md);
+        }
+
+        .cta-section h2 {
+            font-size: 32px;
+            margin-bottom: var(--space-lg);
+        }
+
+        .cta-section p {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ================================================================
+           FOOTER
+           ================================================================ */
+
+        footer {
+            background: var(--color-text-primary);
+            color: var(--color-bg-white);
+            padding: var(--space-3xl) 0;
+            margin-top: var(--space-3xl);
+        }
+
+        footer .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-2xl);
+        }
+
+        footer h4 {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: var(--space-lg);
+            letter-spacing: 0.5px;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer li {
+            margin-bottom: var(--space-md);
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 250ms ease;
+        }
+
+        footer a:hover {
+            color: var(--color-accent);
+        }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .trust-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            footer .container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                height: 56px;
+                padding: var(--space-md) var(--space-lg);
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-logo {
+                font-size: 18px;
+            }
+
+            .hero {
+                padding: var(--space-2xl) var(--space-lg);
+                min-height: 400px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: var(--space-2xl) 0;
+            }
+
+            .section h2 {
+                font-size: 28px;
+                margin-bottom: var(--space-lg);
+            }
+
+            .trust-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-lg);
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer .container {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+        }
+
+        /* ================================================================
+           ANNOTATION NOTES
+           ================================================================ */
+
+        .annotation {
+            background: #FEF3C7;
+            border-left: 4px solid #F39C12;
+            padding: var(--space-md);
+            margin: var(--space-lg) 0;
+            font-size: 12px;
+            color: #92400e;
+            font-family: monospace;
+            border-radius: var(--radius-md);
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="nav-logo">PetVital</div>
+        <ul class="nav-menu">
+            <li><a href="#">Shop All</a></li>
+            <li><a href="#">Dogs</a></li>
+            <li><a href="#">Cats</a></li>
+            <li><a href="#">Sustainability</a></li>
+            <li><a href="#">Blog</a></li>
+        </ul>
+        <div style="display: flex; gap: var(--space-lg); font-size: 20px; cursor: pointer;">
+            <span>🔍</span>
+            <span>👤</span>
+            <span>🛒</span>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div style="max-width: 600px;">
+            <h1>Nutrition Your Pet Deserves</h1>
+            <p>Premium, vet-formulated pet food made with organic ingredients and zero compromises</p>
+            <div style="display: flex; gap: var(--space-md); justify-content: center;">
+                <button class="btn btn-primary">Shop Now</button>
+                <button class="btn btn-secondary">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="annotation">💡 HERO SECTION: 500px height desktop / 400px mobile. Gradient bg, centered text, 2 CTAs</div>
+
+    <!-- TRUST SECTION -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon">✓</div>
+                    <h4>Vet Approved</h4>
+                    <p>Formulated by veterinary nutritionists</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">🌱</div>
+                    <h4>Organic Ingredients</h4>
+                    <p>100% natural & sustainably sourced</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">📦</div>
+                    <h4>Fresh Delivery</h4>
+                    <p>Made fresh, delivered to your door</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">💚</div>
+                    <h4>Healthy Pets</h4>
+                    <p>See results in 2-4 weeks</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="annotation">TRUST SECTION: 4 columns desktop / 2 columns tablet / 1 column mobile. Icons + text, no cards, center-aligned</div>
+
+    <!-- FEATURED PRODUCTS -->
+    <section class="section container">
+        <h2>Best Sellers</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">🐶</div>
+                <div class="product-info">
+                    <div class="product-name">Premium Puppy Formula</div>
+                    <div class="product-desc">Complete nutrition for growing pups</div>
+                    <div class="product-price">$34.99</div>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">🐱</div>
+                <div class="product-info">
+                    <div class="product-name">Cat Nutrition Blend</div>
+                    <div class="product-desc">High-protein recipe for felines</div>
+                    <div class="product-price">$28.99</div>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">🦴</div>
+                <div class="product-info">
+                    <div class="product-name">Organic Senior Mix</div>
+                    <div class="product-desc">Gentle formula for mature pets</div>
+                    <div class="product-price">$32.99</div>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">🥕</div>
+                <div class="product-info">
+                    <div class="product-name">Root Veggie Treats</div>
+                    <div class="product-desc">Crunchy, nutrient-dense snacks</div>
+                    <div class="product-price">$12.99</div>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="annotation">PRODUCTS: 280px cards, 4 columns desktop / 2 tablet / 1 mobile. Hover: lift +4px, box shadow, border highlight</div>
+
+    <!-- CTA SECTION -->
+    <section class="section container">
+        <div class="cta-section">
+            <h2>Subscribe & Save 20%</h2>
+            <p>Get your pet's favorite food delivered monthly. Cancel anytime.</p>
+            <button class="btn btn-primary">Subscribe Now</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div>
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">Dogs</a></li>
+                    <li><a href="#">Cats</a></li>
+                    <li><a href="#">Treats</a></li>
+                    <li><a href="#">All Products</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Customer Service</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <div class="annotation">FOOTER: Dark bg, 4 columns desktop / 2 tablet / 1 mobile. Links in light color, hover to accent color</div>
+
+</body>
+</html>
