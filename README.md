@@ -27,6 +27,28 @@ This package contains everything your developers need to build the Shopify theme
 
 ## 🚀 QUICK START (5 MINUTES)
 
+### Full-Stack React + Express + MongoDB App
+```
+npm run install:all
+npm run seed
+npm run dev
+```
+Then open:
+```
+http://localhost:5173
+```
+See `SETUP_FULLSTACK.md` for the complete React, Node.js, Express, and MongoDB setup.
+
+### Optional: Run Only the Express Backend
+```
+npm start
+```
+Then open:
+```
+http://localhost:5000/api/health
+```
+This starts only the backend API. See `BACKEND_SETUP.md` for route details.
+
 ### Step 1: View the Design System
 ```
 Open: components.html

@@ -18,6 +18,53 @@ document.addEventListener('DOMContentLoaded', () => {
     initResizeHandler();
 });
 
+const API_BASE = window.location.protocol === 'file:' ? '' : '/api';
+
+const PRODUCT_IDS_BY_NAME = {
+    'Premium Puppy Formula': 'premium-puppy-formula',
+    'Cat Nutrition Blend': 'cat-nutrition-blend',
+    'Organic Senior Mix': 'organic-senior-mix',
+    'Root Veggie Treats': 'root-veggie-treats'
+};
+
+async function apiRequest(path, options = {}) {
+    if (!API_BASE) return null;
+
+    const response = await fetch(`${API_BASE}${path}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            ...(options.headers || {})
+        },
+        ...options
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        throw new Error(data.error || 'Request failed');
+    }
+
+    return data;
+}
+
+function setButtonMessage(button, message, color = '#27AE60') {
+    const originalText = button.textContent;
+    const originalBackground = button.style.background;
+    const originalColor = button.style.color;
+
+    button.textContent = message;
+    button.style.background = color;
+    button.style.color = '#fff';
+    button.disabled = true;
+
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.style.background = originalBackground;
+        button.style.color = originalColor;
+        button.disabled = false;
+    }, 2000);
+}
+
 // ================================================================
 // MOBILE MENU TOGGLE
 // ================================================================
@@ -137,6 +184,27 @@ function initProductCards() {
         card.addEventListener('touchend', () => {
             card.classList.remove('touching');
         }, { passive: true });
+
+        const cartButton = card.querySelector('.btn');
+        const productName = card.querySelector('.product-name')?.textContent?.trim();
+        const productId = PRODUCT_IDS_BY_NAME[productName];
+
+        if (cartButton && productId) {
+            cartButton.addEventListener('click', async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                try {
+                    await apiRequest('/cart', {
+                        method: 'POST',
+                        body: JSON.stringify({ productId, quantity: 1 })
+                    });
+                    setButtonMessage(cartButton, 'Added!');
+                } catch {
+                    setButtonMessage(cartButton, 'Try Again', '#c94a4a');
+                }
+            });
+        }
     });
 }
 
@@ -185,23 +253,35 @@ function initLazyLoad() {
 // NEWSLETTER FORM VALIDATION
 // ================================================================
 function initNewsletter() {
-    const subscribeBtn = document.querySelector('.cta-section .btn');
-    if (!subscribeBtn) return;
+    const ctaSection = document.querySelector('.cta-section');
+    if (!ctaSection) return;
 
-    subscribeBtn.addEventListener('click', function(e) {
+    const emailInput = ctaSection.querySelector('input[type="email"]');
+    const joinBtn = emailInput?.closest('.form-group')?.querySelector('.btn');
+    const subscribeBtn = ctaSection.querySelector('.cta-content .btn');
+
+    if (subscribeBtn) {
+        subscribeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            setButtonMessage(this, 'Subscribed!');
+        });
+    }
+
+    if (!joinBtn || !emailInput) return;
+
+    joinBtn.addEventListener('click', async function(e) {
         e.preventDefault();
-        
-        // Show success message
-        const originalText = this.textContent;
-        this.textContent = 'Subscribed! ✓';
-        this.style.background = '#27AE60';
-        this.style.color = '#fff';
-        
-        setTimeout(() => {
-            this.textContent = originalText;
-            this.style.background = '';
-            this.style.color = '';
-        }, 2000);
+
+        try {
+            await apiRequest('/newsletter', {
+                method: 'POST',
+                body: JSON.stringify({ email: emailInput.value.trim() })
+            });
+            emailInput.value = '';
+            setButtonMessage(this, 'Joined!');
+        } catch {
+            setButtonMessage(this, 'Check Email', '#c94a4a');
+        }
     });
 }
 

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "premium-puppy-formula",
+    "name": "Premium Puppy Formula",
+    "tag": "Bestseller",
+    "description": "Complete nutrition for growing pups with DHA and probiotics.",
+    "price": 34.99,
+    "oldPrice": 49.99,
+    "image": "dog",
+    "category": "Dogs",
+    "stock": 42,
+    "rating": 5,
+    "reviews": 127,
+    "sizes": ["1 lb", "5 lbs", "10 lbs", "20 lbs"]
+  },
+  {
+    "id": "cat-nutrition-blend",
+    "name": "Cat Nutrition Blend",
+    "tag": "Popular",
+    "description": "High-protein recipe for healthy adult cats.",
+    "price": 28.99,
+    "oldPrice": null,
+    "image": "cat",
+    "category": "Cats",
+    "stock": 31,
+    "rating": 5,
+    "reviews": 89,
+    "sizes": ["1 lb", "3 lbs", "6 lbs"]
+  },
+  {
+    "id": "organic-senior-mix",
+    "name": "Organic Senior Mix",
+    "tag": "Premium",
+    "description": "Gentle organic formula for mature pets.",
+    "price": 32.99,
+    "oldPrice": null,
+    "image": "bone",
+    "category": "Dogs",
+    "stock": 18,
+    "rating": 4,
+    "reviews": 56,
+    "sizes": ["3 lbs", "6 lbs", "12 lbs"]
+  },
+  {
+    "id": "root-veggie-treats",
+    "name": "Root Veggie Treats",
+    "tag": "New",
+    "description": "Crunchy, nutrient-dense vegetable snacks.",
+    "price": 12.99,
+    "oldPrice": null,
+    "image": "carrot",
+    "category": "Treats",
+    "stock": 64,
+    "rating": 5,
+    "reviews": 203,
+    "sizes": ["8 oz", "1 lb"]
+  }
+]

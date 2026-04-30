@@ -16,15 +16,15 @@
     --color-accent-dark: #a6884d;
     
     /* Background Colors */
-    --color-bg-warm: #fafafa;
+    --color-bg-warm: #fbfaf7;
     --color-bg-white: #ffffff;
-    --color-bg-light: #f5f5f5;
-    --color-bg-cream: #f0f0f0;
+    --color-bg-light: #f6f4ef;
+    --color-bg-cream: #efe9dc;
     
     /* Text Colors */
     --color-text-primary: #1a1a1a;
-    --color-text-secondary: #4a4a4a;
-    --color-text-muted: #7a7a7a;
+    --color-text-secondary: #3f4541;
+    --color-text-muted: #626b66;
     
     /* UI Colors */
     --color-border: #e8e4dc;
@@ -37,7 +37,7 @@
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
     --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
-    --shadow-glow: 0 4px 20px rgba(45, 107, 69, 0.2);
+    --shadow-glow: 0 4px 16px rgba(15, 45, 26, 0.16);
     
     /* Spacing */
     --space-xs: 4px;
@@ -61,7 +61,7 @@
     --font-secondary: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-size-xs: 12px;
     --font-size-sm: 14px;
-    --font-size-base: 16px;
+    --font-size-base: 17px;
     --font-size-lg: 18px;
     --font-size-xl: 20px;
     --font-size-2xl: 24px;
@@ -95,7 +95,7 @@ html {
 body {
     font-family: var(--font-secondary);
     font-size: var(--font-size-base);
-    line-height: 1.6;
+    line-height: 1.7;
     color: var(--color-text-primary);
     background: var(--color-bg-warm);
     overflow-x: hidden;
@@ -109,7 +109,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #fafafa;
+    background: var(--color-bg-warm);
     pointer-events: none;
     z-index: -1;
 }
@@ -124,10 +124,10 @@ body::before {
    NAVIGATION - GLASSMORPHISM EFFECT
    ================================================================ */
 nav {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(232, 228, 220, 0.5);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
     padding: var(--space-lg) var(--space-2xl);
     display: flex;
     justify-content: space-between;
@@ -171,7 +171,7 @@ nav.scrolled {
 
 .nav-menu a {
     font-size: var(--font-size-sm);
-    font-weight: 500;
+    font-weight: 700;
     color: var(--color-text-primary);
     text-decoration: none;
     text-transform: uppercase;
@@ -247,6 +247,9 @@ nav.scrolled {
     padding: calc(72px + var(--space-4xl)) var(--space-xl) var(--space-4xl);
     position: relative;
     overflow: hidden;
+    background:
+        linear-gradient(135deg, rgba(15, 45, 26, 0.94), rgba(26, 77, 46, 0.88)),
+        url("https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=1800&q=80") center/cover;
 }
 
 /* Animated Background */
@@ -258,8 +261,8 @@ nav.scrolled {
     width: 200%;
     height: 200%;
     background: 
-        radial-gradient(ellipse at 30% 20%, rgba(45, 107, 69, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 80%, rgba(201, 166, 107, 0.06) 0%, transparent 50%);
+        radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.12) 0%, transparent 45%),
+        radial-gradient(ellipse at 70% 80%, rgba(201, 166, 107, 0.18) 0%, transparent 45%);
     animation: heroFloat 20s ease-in-out infinite;
 }
 
@@ -279,13 +282,13 @@ nav.scrolled {
     display: inline-flex;
     align-items: center;
     gap: var(--space-sm);
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.36);
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-full);
     font-size: var(--font-size-xs);
     font-weight: 500;
-    color: var(--color-accent-light);
+    color: #fff3cf;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: var(--space-lg);
@@ -299,7 +302,8 @@ nav.scrolled {
     line-height: 1.1;
     color: #ffffff;
     margin-bottom: var(--space-lg);
-    letter-spacing: -2px;
+    letter-spacing: 0;
+    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.35);
 }
 
 .hero h1 span {
@@ -313,7 +317,7 @@ nav.scrolled {
 .hero p {
     font-size: var(--font-size-lg);
     line-height: 1.8;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.96);
     margin-bottom: var(--space-xl);
     max-width: 600px;
     margin-left: auto;
@@ -339,7 +343,7 @@ nav.scrolled {
     padding: 14px 28px;
     font-family: var(--font-secondary);
     font-size: var(--font-size-sm);
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
     border: none;
     border-radius: var(--radius-full);
@@ -365,27 +369,28 @@ nav.scrolled {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+    background: var(--color-primary);
     color: #ffffff;
     box-shadow: var(--shadow-glow);
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(201, 166, 107, 0.4);
+    background: var(--color-primary-light);
+    box-shadow: 0 12px 28px rgba(15, 45, 26, 0.24);
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.96);
+    color: var(--color-primary-dark);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #ffffff;
     transform: translateY(-3px);
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: #ffffff;
 }
 
 /* ================================================================
@@ -417,7 +422,7 @@ nav.scrolled {
     text-align: center;
     padding: var(--space-xl);
     background: var(--color-bg-white);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     transition: all var(--transition-base);
     position: relative;
     overflow: hidden;
@@ -437,7 +442,7 @@ nav.scrolled {
 }
 
 .trust-item:hover {
-    transform: translateY(-8px);
+    transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
 }
 
@@ -470,7 +475,7 @@ nav.scrolled {
 .trust-item p {
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 /* ================================================================
@@ -492,7 +497,7 @@ nav.scrolled {
     font-weight: 700;
     color: var(--color-text-primary);
     margin-bottom: var(--space-md);
-    letter-spacing: -1px;
+    letter-spacing: 0;
 }
 
 .section-header p {
@@ -500,6 +505,7 @@ nav.scrolled {
     color: var(--color-text-secondary);
     max-width: 500px;
     margin: 0 auto;
+    line-height: 1.7;
 }
 
 .products-grid {
@@ -510,11 +516,12 @@ nav.scrolled {
 
 .product-card {
     background: var(--color-bg-white);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     overflow: hidden;
-    transition: all var(--transition-bounce);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
     box-shadow: var(--shadow-sm);
     position: relative;
+    border: 1px solid var(--color-border);
 }
 
 .product-card::before {
@@ -531,8 +538,8 @@ nav.scrolled {
 }
 
 .product-card:hover {
-    transform: translateY(-12px);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
 }
 
 .product-image {
@@ -592,13 +599,14 @@ nav.scrolled {
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
     margin-bottom: var(--space-md);
-    line-height: 1.5;
+    line-height: 1.65;
 }
 
 .product-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: var(--space-md);
     margin-top: var(--space-md);
 }
 
@@ -635,7 +643,7 @@ nav.scrolled {
     gap: var(--space-3xl);
     align-items: center;
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-md);
     padding: var(--space-3xl);
     position: relative;
     overflow: hidden;
@@ -662,12 +670,12 @@ nav.scrolled {
     font-weight: 700;
     color: #ffffff;
     margin-bottom: var(--space-md);
-    letter-spacing: -1px;
+    letter-spacing: 0;
 }
 
 .cta-content p {
     font-size: var(--font-size-lg);
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.94);
     margin-bottom: var(--space-xl);
     line-height: 1.7;
 }
@@ -683,21 +691,22 @@ nav.scrolled {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    color: rgba(255, 255, 255, 0.9);
+    color: #ffffff;
     font-size: var(--font-size-sm);
 }
 
 .cta-feature span {
-    color: var(--color-accent);
+    color: var(--color-accent-light);
 }
 
 .cta-form {
     position: relative;
     z-index: 1;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-md);
     padding: var(--space-xl);
+    border: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .cta-form h3 {
@@ -708,7 +717,7 @@ nav.scrolled {
 }
 
 .cta-form p {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.9);
     font-size: var(--font-size-sm);
     margin-bottom: var(--space-lg);
 }
@@ -767,7 +776,7 @@ footer {
 
 .footer-brand p {
     font-size: var(--font-size-sm);
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.78);
     line-height: 1.7;
     margin-bottom: var(--space-lg);
 }
@@ -814,7 +823,7 @@ footer {
 }
 
 .footer-column a {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.78);
     text-decoration: none;
     font-size: var(--font-size-sm);
     transition: all var(--transition-base);
@@ -833,11 +842,11 @@ footer {
     justify-content: space-between;
     align-items: center;
     font-size: var(--font-size-sm);
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .footer-bottom a {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.76);
     text-decoration: none;
     margin-left: var(--space-lg);
 }
@@ -1028,7 +1037,7 @@ footer {
     
     .hero {
         padding: calc(72px + var(--space-2xl)) var(--space-lg) var(--space-2xl);
-        min-height: auto;
+        min-height: 640px;
     }
     
     .hero h1 {
@@ -1037,6 +1046,7 @@ footer {
     
     .hero p {
         font-size: var(--font-size-base);
+        line-height: 1.7;
     }
     
     .hero-buttons {
@@ -1059,6 +1069,17 @@ footer {
     
     .section-header h2 {
         font-size: var(--font-size-3xl);
+    }
+    
+    .product-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    
+    .product-card .btn {
+        width: auto;
+        min-width: 118px;
+        padding: 12px 14px;
     }
     
     .footer-grid {
