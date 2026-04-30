@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail Page – PetVital Design</title>
+    <style>
+        :root {
+            --color-primary: #2D5C3F;
+            --color-accent: #D4A574;
+            --color-bg-warm: #FFFBF5;
+            --color-text-primary: #2C3E50;
+            --color-text-secondary: #7A8A99;
+            --color-border: #E8ECEF;
+            --color-bg-white: #FFFFFF;
+            --color-bg-light: #F7F9FB;
+            --color-success: #27AE60;
+            --font-family: "Segoe UI", Roboto, sans-serif;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+            --radius-md: 8px;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.16);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--color-text-primary);
+            background: var(--color-bg-warm);
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: var(--space-lg); }
+        h2 { font-size: 24px; font-weight: 700; margin-bottom: var(--space-lg); margin-top: var(--space-xl); }
+        h3 { font-size: 16px; font-weight: 600; margin-bottom: var(--space-md); }
+        p { font-size: 14px; line-height: 1.6; margin-bottom: var(--space-md); }
+
+        /* Navigation */
+        nav {
+            background: var(--color-bg-white);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--space-lg) var(--space-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* Breadcrumbs */
+        .breadcrumb {
+            padding: var(--space-lg) 0;
+            font-size: 12px;
+            color: var(--color-text-secondary);
+        }
+
+        .breadcrumb a {
+            color: var(--color-primary);
+            text-decoration: none;
+            margin: 0 var(--space-sm);
+        }
+
+        /* Product Layout */
+        .product-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3xl);
+            padding: var(--space-3xl) 0;
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--color-bg-light), #efefef);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 160px;
+            position: relative;
+        }
+
+        .badge-new {
+            position: absolute;
+            top: var(--space-lg);
+            right: var(--space-lg);
+            background: var(--color-success);
+            color: white;
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Product Info */
+        .product-info {
+            padding: var(--space-xl) 0;
+        }
+
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: 14px;
+        }
+
+        .product-rating-count {
+            color: var(--color-text-secondary);
+        }
+
+        .price-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .price-display {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .price-old {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            text-decoration: line-through;
+            margin-right: var(--space-md);
+        }
+
+        /* Description */
+        .description-section {
+            background: var(--color-bg-light);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        /* Options */
+        .options-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .option-group {
+            margin-bottom: var(--space-lg);
+        }
+
+        .option-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: var(--space-md);
+            letter-spacing: 0.5px;
+        }
+
+        .size-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+        }
+
+        .size-btn {
+            padding: 12px;
+            border: 2px solid var(--color-border);
+            background: var(--color-bg-white);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 250ms ease;
+            text-align: center;
+        }
+
+        .size-btn:hover {
+            border-color: var(--color-primary);
+            background: var(--color-bg-light);
+        }
+
+        .size-btn.active {
+            border-color: var(--color-primary);
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* Quantity Selector */
+        .quantity-section {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .quantity-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .quantity-selector {
+            display: flex;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 250ms ease;
+        }
+
+        .qty-btn:hover {
+            background: var(--color-bg-light);
+        }
+
+        .qty-input {
+            width: 60px;
+            border: none;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 250ms ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            width: 100%;
+            margin-bottom: var(--space-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            opacity: 0.95;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-bg-light);
+        }
+
+        .btn-wishlist {
+            background: var(--color-bg-light);
+            color: var(--color-primary);
+            border: none;
+            width: 100%;
+        }
+
+        /* Specs Table */
+        .specs-section {
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-2xl);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .specs-table {
+            width: 100%;
+        }
+
+        .spec-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: var(--color-text-secondary);
+        }
+
+        .spec-value {
+            color: var(--color-text-primary);
+        }
+
+        /* Related Products */
+        .related-section {
+            margin-top: var(--space-3xl);
+            padding: var(--space-3xl) 0;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+
+        .product-card {
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: all 250ms ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-card-image {
+            width: 100%;
+            height: 150px;
+            background: var(--color-bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .product-card-info {
+            padding: var(--space-lg);
+        }
+
+        .product-card-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .product-card-price {
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        /* Annotation */
+        .annotation {
+            background: #FEF3C7;
+            border-left: 4px solid #F39C12;
+            padding: var(--space-md);
+            margin: var(--space-lg) 0;
+            font-size: 11px;
+            color: #92400e;
+            font-family: monospace;
+            border-radius: var(--radius-md);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .product-wrapper {
+                grid-template-columns: 1fr;
+                gap: var(--space-2xl);
+            }
+
+            .size-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            .size-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .spec-row {
+                grid-template-columns: 1fr;
+                gap: var(--space-sm);
+            }
+
+            .spec-label {
+                font-weight: 700;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .breadcrumb {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-logo">PetVital</div>
+        <div style="display: flex; gap: var(--space-lg); font-size: 20px; cursor: pointer;">
+            <span>🔍</span>
+            <span>👤</span>
+            <span>🛒</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Breadcrumbs -->
+        <div class="breadcrumb">
+            <a href="#">Home</a> / <a href="#">Dogs</a> / Premium Puppy Formula
+        </div>
+
+        <div class="annotation">BREADCRUMBS: 12px, gray text, links in primary color</div>
+
+        <!-- Product Layout -->
+        <div class="product-wrapper">
+            <!-- Image Section -->
+            <div>
+                <div class="product-image">
+                    🐶
+                    <div class="badge-new">New</div>
+                </div>
+
+                <div class="annotation">PRODUCT IMAGE: Aspect ratio 1:1 (square), 600px desktop / full width mobile. Badge positioned top-right</div>
+            </div>
+
+            <!-- Info Section -->
+            <div class="product-info">
+                <h1>Premium Puppy Formula</h1>
+
+                <div class="product-meta">
+                    <div class="product-rating">
+                        <span>⭐⭐⭐⭐⭐</span>
+                        <span class="product-rating-count">(127 reviews)</span>
+                    </div>
+                    <div style="color: var(--color-text-secondary); font-size: 12px;">In Stock</div>
+                </div>
+
+                <div class="annotation">RATING: Stars + count, 14px. "In Stock" label in success green</div>
+
+                <!-- Price -->
+                <div class="price-section">
+                    <div class="price-display">$34.99</div>
+                    <span class="price-old">$49.99</span>
+                    <span style="color: #E74C3C; font-weight: 600;">Save 30%</span>
+                </div>
+
+                <div class="annotation">PRICE: 32px bold, primary color. Original price struck-out gray. Discount in red</div>
+
+                <!-- Description -->
+                <div class="description-section">
+                    <h3>Why Your Puppy Loves It</h3>
+                    <p>Complete nutrition for growing pups with all essential amino acids, DHA for brain development, and our proprietary probiotic blend for digestive health.</p>
+                </div>
+
+                <!-- Size Selection -->
+                <div class="options-section">
+                    <div class="option-label">Select Size</div>
+                    <div class="size-options">
+                        <button class="size-btn">1 lb</button>
+                        <button class="size-btn active">5 lbs</button>
+                        <button class="size-btn">10 lbs</button>
+                        <button class="size-btn">20 lbs</button>
+                    </div>
+                </div>
+
+                <div class="annotation">SIZE OPTIONS: 4 buttons desktop / 2 tablet / 1 mobile. Active state: primary bg + white text</div>
+
+                <!-- Quantity -->
+                <div class="quantity-section">
+                    <div class="quantity-label">Quantity</div>
+                    <div class="quantity-selector">
+                        <button class="qty-btn">−</button>
+                        <input type="number" class="qty-input" value="1" min="1">
+                        <button class="qty-btn">+</button>
+                    </div>
+                </div>
+
+                <!-- CTAs -->
+                <button class="btn btn-primary">Add to Cart</button>
+                <button class="btn btn-secondary">Buy on Subscribe &amp; Save</button>
+                <button class="btn btn-wishlist">♡ Add to Wishlist</button>
+
+                <div class="annotation">BUTTONS: Primary (forest green) / Secondary (outline) / Tertiary (light). Hover: lift +2px, shadow</div>
+
+                <!-- Specs -->
+                <div class="specs-section">
+                    <h2>Product Details</h2>
+                    <div class="specs-table">
+                        <div class="spec-row">
+                            <div class="spec-label">Ingredients</div>
+                            <div class="spec-value">Organic chicken, sweet potato, peas, carrots, blueberry</div>
+                        </div>
+                        <div class="spec-row">
+                            <div class="spec-label">Protein</div>
+                            <div class="spec-value">28%</div>
+                        </div>
+                        <div class="spec-row">
+                            <div class="spec-label">Fat</div>
+                            <div class="spec-value">15%</div>
+                        </div>
+                        <div class="spec-row">
+                            <div class="spec-label">Life Stage</div>
+                            <div class="spec-value">Puppy (up to 12 months)</div>
+                        </div>
+                        <div class="spec-row">
+                            <div class="spec-label">Shelf Life (unopened)</div>
+                            <div class="spec-value">18 months</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="annotation">SPECS: 2-column layout (label / value). Borders between rows. Label in secondary gray, value in primary text</div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="related-section">
+            <h2>Recommended for You</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-card-image">🦴</div>
+                    <div class="product-card-info">
+                        <div class="product-card-name">Joint Support Treats</div>
+                        <div class="product-card-price">$16.99</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-card-image">🥩</div>
+                    <div class="product-card-info">
+                        <div class="product-card-name">Lean Protein Topper</div>
+                        <div class="product-card-price">$22.99</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-card-image">🥕</div>
+                    <div class="product-card-info">
+                        <div class="product-card-name">Veggie Mix Supplement</div>
+                        <div class="product-card-price">$14.99</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-card-image">🥛</div>
+                    <div class="product-card-info">
+                        <div class="product-card-name">Puppy Vitamin Powder</div>
+                        <div class="product-card-price">$18.99</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="annotation">RELATED: 4 columns desktop / 2 tablet / 1 mobile. Cards as subgrid items, hover: lift +4px</div>
+        </div>
+    </div>
+</body>
+</html>
